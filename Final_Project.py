@@ -22,6 +22,9 @@ def hands(deck):
     player_hand = hands[1]
     return dealer_hand, player_hand
 
+
+
+
 def play_game(deck, dealer_hand, player_hand):
     bet = float(input("Bet amount: "))
     print()
@@ -31,6 +34,21 @@ def play_game(deck, dealer_hand, player_hand):
     print("YOUR CARDS:")
     for card in player_hand:
         print(f"{card[1]} of {card[0]}")
+    while True:
+        print()
+        hit_stand = input("Hit or stand? (hit/stand): ")
+        if hit_stand.lower() == 'hit':
+            card = deck.pop()
+            player_hand.append(card)
+            print("YOUR CARDS:")
+            for card in player_hand:
+                print(f"{card[1]} of {card[0]}")
+                print()
+        elif hit_stand.lower() == 'stand':
+            print("DEALER'S CARDS:")
+            for card in dealer_hand:
+                print(f"{card[1]} of {card[0]}")
+            break
         
   
 
