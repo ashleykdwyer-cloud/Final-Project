@@ -24,10 +24,30 @@ def hands(deck):
 def check_blackjack(hand):
     return len(hand) == 2 and totals(hand) == 21
          
+def bet(money):
+    while True:
+        try:
+            bet = float(input("Bet amount: "))
+        except ValueError:
+            print("Invalid bet input. Enter valid number.\n")
+            continue
+        
+        if bet < 5:
+            print("Bet must be a min of $5 and max of $1000. Try again!\n")
+            continue
+        elif bet > 1000:
+            print("Bet must be a max of $1000 and min of $5. Try again!\n")
+            continue
+        elif bet > money:
+            print(f"You do not have enough money. You have ${money}, try again!\n")
+            continue
+        else:
+            return bet
+    
 
-
-def play_game(deck, dealer_hand, player_hand, money):
-    bet = float(input("Bet amount: "))
+def play_game(deck, dealer_hand, player_hand, bet, money):
+    money_balance(money)
+    bet(money)
     print()
     print("DEALER'S SHOW CARD:")
     dealer_card = dealer_hand[0]
@@ -100,6 +120,19 @@ def play_game(deck, dealer_hand, player_hand, money):
     print(f"Money: ${money}")
     return money
 
+def money_balance(money):
+    if money < 5:
+        chips= input(f"Your balance is {money}, would you like to buy more chips? (y/n): ").lower()
+        if chips == 'y':
+            amount = float(input("Enter the amount you would like to buy: "))
+            money += amount
+            print(f"New balance: {money}")
+            return money
+        else:
+            return None
+    
+        
+
 def totals(hand):
     total = sum(card[2] for card in hand)
     aces = sum(1 for card in hand if card[1] == 'A')
@@ -123,12 +156,13 @@ def main():
     while True:
         deck = deck_cards()
         dealer_hand, player_hand = hands(deck)
-        money = play_game(deck, dealer_hand, player_hand, money)
+        money = play_game(deck, dealer_hand, player_hand, bet,  money)
         db.write_money(money)
         play_again = input("\nPlay again? (y/n): ")
+        print()
         if play_again != 'y':
             break
-    print("Come back soon!\nBye!")
+    print("\nCome back soon!\nBye!")
        
 
 
