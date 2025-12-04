@@ -36,19 +36,26 @@ def play_game(deck, dealer_hand, player_hand):
         print(f"{card[1]} of {card[0]}")
     while True:
         print()
-        hit_stand = input("Hit or stand? (hit/stand): ")
-        if hit_stand.lower() == 'hit':
+        hit_stand = input("Hit or stand? (hit/stand): ").lower()
+        if hit_stand == 'hit':
             card = deck.pop()
             player_hand.append(card)
-            print("YOUR CARDS:")
+            print("\nYOUR CARDS:")
             for card in player_hand:
                 print(f"{card[1]} of {card[0]}")
-                print()
-        elif hit_stand.lower() == 'stand':
-            print("DEALER'S CARDS:")
+        elif hit_stand== 'stand':
+            print("\nDEALER'S CARDS:")
             for card in dealer_hand:
                 print(f"{card[1]} of {card[0]}")
             break
+    player_total = 0
+    for card in player_hand:
+        player_total += card[2]
+    print(f"\nYOUR POINTS:\t",player_total)
+    dealer_total = 0
+    for card in dealer_hand:
+        dealer_total += card[2]
+    print(f"DEALER'S POINTS:",dealer_total)
         
   
 
